@@ -1,4 +1,4 @@
-module datapath_tb:
+module datapath_tb;
 
 	reg R0in, R1in, R2in, R3in, R4in, R5in, R6in, R7in, R8in, R9in, R10in, R11in, R12in, R13in, R14in, R15in;
 	
@@ -17,7 +17,7 @@ module datapath_tb:
 	wire[63:0] ZReg;
 	
 	parameter	Default = 4'b0000, Reg_load1a = 4'b0001, Reg_load1b = 4'b0010, Reg_load2a = 4'b0011 ,Reg_load2b = 4'b0100,
-					Reg_load3a = 4'b0101, Reg_load3b = 4'b0110, T0 = 4'b0111, T1 = 4'b1000, T2 = 4'b1001, T3 = 4'b1010, T4 = 4'b1011.
+					Reg_load3a = 4'b0101, Reg_load3b = 4'b0110, T0 = 4'b0111, T1 = 4'b1000, T2 = 4'b1001, T3 = 4'b1010, T4 = 4'b1011,
 					T5 = 4'b1100;
 					
 	reg[3:0] Present_state = Default;
@@ -77,7 +77,7 @@ always @(Present_state)
 								  #15 MDRout <= 0; R2in <= 0;     // initialize R2 with the value $22           
 			end 
 			Reg_load2a: begin   
-								  Mdatain <= 32’h00000024; 
+								  Mdatain <= 32'h00000024; 
 								  #10 Read <= 1; MDRin <= 1;   
 								  #15 Read <= 0; MDRin <= 0;       
 			end 
@@ -86,7 +86,7 @@ always @(Present_state)
 								  #15 MDRout <= 0; R4in <= 0;  // initialize R4 with the value $24           
 			end 
 		  Reg_load3a: begin   
-								 Mdatain <= 32’h00000026; 
+								 Mdatain <= 32'h00000026; 
 								#10 Read <= 1; MDRin <= 1;   
 								#15 Read <= 0; MDRin <= 0; 
 			end 
@@ -100,7 +100,7 @@ always @(Present_state)
 			end 
 		  T1: begin 
 					Zlowout <= 1; PCin <= 1; Read <= 1; MDRin <= 1;   
-					Mdatain <= 32’h4A920000;       // opcode for “and R5, R2, R4” 
+					Mdatain <= 32'h4A920000;       // opcode for “and R5, R2, R4” 
 			end 
 		  T2: begin 
 					MDRout <= 1; IRin <= 1;    
@@ -113,7 +113,7 @@ always @(Present_state)
 					R4out <= 1; ALUselect <= 4'b0110; Zin <= 1; Yin <=0; R2out <= 0;    
 			end 
 		  T5: begin 
-					Zlowout <= 1; R5in <= 1, R4out <= 0;    
+					Zlowout <= 1; R5in <= 1; R4out <= 0;    
 			end 
        endcase 
     end 

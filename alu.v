@@ -6,7 +6,7 @@ module alu(
 			output carry
 );
 
-wire [63:0] mult-res;
+wire [63:0] mult_res;
 wire[31:0] ror_res, rol_res;
 reg [31:0] RLo, RHi;
 assign Z = {RHi, RLo};

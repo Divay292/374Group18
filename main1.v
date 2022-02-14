@@ -16,8 +16,7 @@ module main1(
 		wire [31:0] YData, XData;
 		wire [31:0] ZLowData, ZHighData;
 		
-		wire [31:0]	busInR0. busInR1, busInR2, busInR3, busInR4, busInR5, busInR6, busInR7, busInR8, busInR9, busInR10, busInR11, busInR12,
-						busInR13, busInR14, busInR15, busInPC, busInMAR, busInMDR, busInHI, busInLO, busInZHI, busInZLO, busInInPort, busInC;
+		wire [31:0]	busInR0, busInR1, busInR2, busInR3, busInR4, busInR5, busInR6, busInR7, busInR8, busInR9, busInR10, busInR11, busInR12, busInR13, busInR14, busInR15, busInPC, busInMAR, busInMDR, busInHI, busInLO, busInZHI, busInZLO, busInInPort, busInC;
 						
 		gen_reg r0(busInR0, bus, R0in, clr, clk);
 		gen_reg r1(busInR1, bus, R1in, clr, clk);
