@@ -3,6 +3,7 @@ module z_reg_64 (
 			input [63:0] D,
 			input ZIn, ZLowOut, ZHighOut, clr, clk
 );
+	
 always @(posedge clk)
 	if(clr)
 		begin

@@ -3,10 +3,14 @@ output reg [31:0] out;
 input [31:0] MdataIn, bus;
 input en, rd, clr, clk;
 wire [31:0] in;
-always @(posedge clk or posedge clr)
-			if(en)
+always @(posedge clk)
+			if(clr)
+				out=0;
+			else if(en)
 				if(rd)
-					out = bus;
-			else
 					out = MdataIn;
+			else
+					out = bus;
+			
+
 endmodule
