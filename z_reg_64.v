@@ -1,6 +1,6 @@
 module z_reg_64 (
-			output reg [31:0] Z, //********This is bad, these aren't connected to anything, so the bus never sees anything it's outputting
-			input [63:0] D,//                               make a single 32bit output for the bus, and find a way to store 64 bits and just choose between based on control signals
+			output reg [31:0] Z, 
+			input [63:0] D,
 			input ZIn, ZLowOut, ZHighOut, clr, clk
 );
 
