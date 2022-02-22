@@ -48,11 +48,11 @@ always @(posedge clk)
 								Reg_load3a	:	#40	Present_state = Reg_load3b;
 								Reg_load3b	:	#40	Present_state = T0;
 								
-								T0			   :	#40	Present_state = T1;
-								T1				:	#40	Present_state = T2;
-								T2				:	#40	Present_state = T3;
-								T3				:	#40	Present_state = T4;
-								T4				:	#40	Present_state = T5;
+								T0			   :	#60	Present_state = T1;
+								T1				:	#60	Present_state = T2;
+								T2				:	#60	Present_state = T3;
+								T3				:	#60	Present_state = T4;
+								T4				:	#60	Present_state = T5;
 					endcase
 			end
 			
@@ -127,10 +127,11 @@ always @(Present_state)
 					R2out <= 1; Yin <= 1;
 			end 
 		  T4: begin 
-					Yin <=0; R2out <= 0; R4out <= 1; ALUselect <= 4'b0110; Zin <= 1;   
+					Yin <=0; R2out <= 0; R4out <= 1; ALUselect <= 4'b0110; Zin <= 1;
 			end 
 		  T5: begin 
-					R4out <= 0; ZLowout <= 1; R5in <= 1; 
+					ALUselect <= 4'b0000;
+					R4out <= 0; Zin <=0; ZLowout <= 1; R5in <= 1; 
 			end 
        endcase 
     end 

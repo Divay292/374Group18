@@ -1,5 +1,6 @@
 module alu(
 			input [3:0] select,
+			input clk,
 			input signed [31:0] A,
 			input signed [31:0] B,
 			output [63:0] Z,
@@ -17,7 +18,7 @@ rotate_right ror(ror_res,A,B);
 rotate_left rol(rol_res,A,B);
 
 
-always @ (select,A,B)
+always @ (posedge clk)
 begin
 		case(select)
 				4'b0001:
@@ -53,7 +54,7 @@ begin
 				4'b1111:
 						RLo <= ror_res;
 				default:
-						RLo <= B;
+						RLo <= RLo;
 			endcase
 		end
 endmodule

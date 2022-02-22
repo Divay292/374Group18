@@ -16,7 +16,7 @@ module main1(
 		wire [31:0] YData, XData;
 		wire [31:0] ZLowData, ZHighData;
 		
-		wire [31:0]	busInR0, busInR1, busInR2, busInR3, busInR4, busInR5, busInR6, busInR7, busInR8, busInR9, busInR10, busInR11, busInR12, busInR13, busInR14, busInR15, busInPC, busInMAR, busInMDR, busInHI, busInLO, busInZHI, busInZLO, busInInPort, busInC;
+		wire [31:0]	busInR0, busInR1, busInR2, busInR3, busInR4, busInR5, busInR6, busInR7, busInR8, busInR9, busInR10, busInR11, busInR12, busInR13, busInR14, busInR15, busInPC, busInMAR, busInMDR, busInHI, busInLO, busInZ, busInInPort, busInC;
 						
 		gen_reg r0(busInR0, bus, R0in, clr, clk);
 		gen_reg r1(busInR1, bus, R1in, clr, clk);
@@ -44,18 +44,18 @@ module main1(
 		gen_reg hi(busInHI, bus, HIin, clr, clk);
 		gen_reg lo(busInLO, bus, LOin, clr, clk);
 		gen_reg y(YData, bus, Yin, clr, clk);
-		z_reg_64 z(ZHighData, ZLowData, ZReg, Zin, ZLowout, ZHighout, clr, clk);
+		z_reg_64 z(busInZ, ZReg, Zin, ZLowout, ZHighout, clr, clk);
 		
 		//ALU
 		//alu alu(ALUselect, YData, ZLowData, ZHighData, carry);
-		alu alu(ALUselect, YData, bus, ZData, carry);
-		assign ZData = ZReg[63:0];
-		assign busInZHI = ZReg[63:32];
-		assign busInZLO = ZReg[31:0];
+		alu alu(ALUselect, clk, YData, bus, ZReg, carry);
+		//assign ZData = ZReg[63:0];
+		//assign busInZHI = ZReg[63:32];
+		//assign busInZLO = ZReg[31:0];
 		// Bus
 		bus bus_inst(busInR0, busInR1, busInR2, busInR3, busInR4, busInR5, busInR6, busInR7, busInR8, busInR9, busInR10, busInR11,
-							busInR12, busInR13, busInR14, busInR15, busInHI, busInLO, busInZHI, busInZLO, busInPC, busInMDR, busInInPort, busInPC,
+							busInR12, busInR13, busInR14, busInR15, busInHI, busInLO, busInZ, busInPC, busInMDR, busInInPort, busInPC,
 							R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out, R10out, R11out, R12out, R13out, R14out, R15out, HIout,
-							LOout, ZHighout, ZLowout, PCout, MDRout, InPortout, Cout, bus);
+							LOout, ZHighout, ZLowout, PCout, MDRout, InPortout, Cout, bus,clk);
 endmodule
 		
