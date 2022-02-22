@@ -17,7 +17,7 @@ module multiply(
 			cc[0] = {y[1],y[0],1'b0};
 			
 			for(kk=1;kk<(32/2);kk=kk+1)
-				cc[kk] = {y[2*kk],y[2*kk-1]};
+				cc[kk] = {y[2*kk+1],y[2*kk],y[2*kk-1]};
 			for(kk=0;kk<(32/2);kk=kk+1)
 			begin
 				case(cc[kk])
