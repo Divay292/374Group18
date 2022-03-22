@@ -23,7 +23,7 @@ always @ (decIn)
 			13 : decOut<=16'b0010000000000000;
 			14 : decOut<=16'b0100000000000000;
 			15 : decOut<=16'b1000000000000000;
-			default: decOut<=5'bx;
+			default: decOut<=16'bx;
 		endcase
 	end
 endmodule

@@ -96,7 +96,8 @@ always @(Present_state)
                             #10 MDRout <= 1; R5in <= 1;   
                #15 MDRout <= 0; R5in <= 0;  // initialize R5 with the value $26           
 			end*/
- 
+			//ld	R1, $85				:	8388693
+			//ld	R0, $35(R1)			:	524323
  
  
 			T0: begin #5 PCout <= 1; MARin <= 1; IncPC <= 1; Zin <= 1; ALUselect <= 4'b1001;
