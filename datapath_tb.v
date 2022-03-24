@@ -173,12 +173,12 @@ always @(Present_state)
 //						 #30 Gra <= 0; Rout <= 0; PCin <= 0; end
 
 //mfhi
-//			T3: begin #5 ZHighout <= 1; Gra <= 1; Rin <= 1;
-//						 #30 ZHighout <= 0; Gra <= 0; Rin <= 0; end
+//			T3: begin #5 HIout <= 1; Gra <= 1; Rin <= 1;
+//						 #30 HIout <= 0; Gra <= 0; Rin <= 0; end
 
 //mflo
-			T3: begin #5 ZLowout <= 1; Gra <= 1; Rin <= 1;
-						 #30 ZLowout <= 0; Gra <= 0; Rin <= 0; end
+			T3: begin #5 LOout <= 1; Gra <= 1; Rin <= 1;
+						 #30 LOout <= 0; Gra <= 0; Rin <= 0; end
 
 //out
 //			T3: begin #5 Gra <= 1; Rout <= 1; outPortin <= 1;
