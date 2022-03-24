@@ -1,7 +1,7 @@
 module main1(
 		input Rin,
 		input Rout,
-		input	HIin, LOin, PCin, IRin, Yin, InPortout, Zin, conIn, outPortin,
+		input	HIin, LOin, PCin, IRin, Yin, InPortout, Zin, conIn, outPortin, R15ctrl,
 		input HIout, LOout, PCout, MDRout, MDRin, MARin, MDRread, memWrite, Cout, clk, IncPC, ZLowout, ZHighout, conOut, BAout, Gra, Grb, Grc,
 		input [3:0] ALUselect,
 		input [31:0] MDatain
@@ -10,7 +10,7 @@ module main1(
 		wire[63:0] ZReg;
 		wire[31:0] bus, IRdata, PCtemp;
 		wire clr;
-		wire IROut;
+		wire IROut, R15in;
 		wire [31:0] YData, XData;
 		wire [31:0] ZLowData, ZHighData;
 			
@@ -36,25 +36,20 @@ module main1(
 		gen_reg r12(busInR12, bus, genRegIn[12], clr, clk);
 		gen_reg r13(busInR13, bus, genRegIn[13], clr, clk);
 		gen_reg r14(busInR14, bus, genRegIn[14], clr, clk);
-		gen_reg r15(busInR15, bus, genRegIn[15], clr, clk);
+		gen_reg r15(busInR15, bus, R15ctrl, clr, clk);
 		
+		assign R15in = genRegIn[15] | R15ctrl;
 		
 		sel_enc selectEncodeLogic(IRdata, Rin, Rout, BAout, Cout, Gra, Grb, Grc, genRegIn, genRegOut, busInC);
 		
-		con_ff conFF(IRdata, bus, conIn, clk, conOut);
-		assign busInPC = conOut ? busInPC+1+
+		con_ff conFF(IRdata, bus, conIn, clk, conFFOut);
 		inoutport inOutPort(outPortin, clr, clk, inPortout, busInInPort, bus);
 		
 		
 		
 		gen_reg ir(IRdata, bus, IRin, clr, clk);
-		pc_reg pc(busInPC, bus, PCin, IncPC, clr, clk);
-		//gen_reg pc(busInPC, bus, PCin, clr, clk);
-		
-		
-		//Change these to be *in* the memSubsys
-		//gen_reg mar(address, bus, MARin, clr, clk);
-		//mdr_reg mdr(busInMDR, MDatain, bus, MDRin, MDRread, clr, clk);
+		pc_reg pc(busInPC, bus, PCin, conOut, conFFOut, IncPC, clr, clk);
+
 		memSubsys memSys(MARin, busInMDR, MDatain, bus, MDRin, MDRread, memWrite, clr, clk);
 		
 		gen_reg hi(busInHI, bus, HIin, clr, clk);

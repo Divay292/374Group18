@@ -5,7 +5,7 @@ module datapath_tb;
 	
 	reg Rout;
 	
-	reg HIin, LOin, PCin, IRin, Yin, InPortout, Zin, conIn;
+	reg HIin, LOin, PCin, IRin, Yin, InPortout, Zin, conIn, outPortin, R15ctrl;
 	
 	reg HIout, LOout, PCout, MDRout, MDRin, MARin, MDRread, Cout, clk, IncPC, ZLowout, ZHighout;
 	
@@ -22,7 +22,7 @@ module datapath_tb;
 	reg[3:0] Present_state = Default;
 	
 	main1 DUT (.Rin(Rin), .Rout(Rout), .HIin(HIin), .LOin(LOin), .PCin(PCin), .IRin(IRin), .Yin(Yin), .InPortout(InPortout),
-				  .Zin(Zin), .conIn(conIn), .outPortin(outPortin), .HIout(HIout), .LOout(LOout), .PCout(PCout), .MDRout(MDRout), .MDRin(MDRin),
+				  .Zin(Zin), .conIn(conIn), .outPortin(outPortin), .R15ctrl(R15ctrl), .HIout(HIout), .LOout(LOout), .PCout(PCout), .MDRout(MDRout), .MDRin(MDRin),
 				  .MARin(MARin), .MDRread(Read), .memWrite(Write), .Cout(Cout), .clk(clk), .IncPC(IncPC), .ZLowout(ZLowout), .ZHighout(ZHighout),
 				  .conOut(conOut), .BAout(BAout), .Gra(Gra), .Grb(Grb), .Grc(Grc), .ALUselect(ALUselect), .MDatain(MDatain));
 
@@ -58,9 +58,10 @@ always @(Present_state)
 											MARin <=0; Zin <=0;
 											PCin <=0; MDRin <=0; IRin <=0; Yin <=0;
 											IncPC <=0; Read <=0; Write <=0; ALUselect <=0;
-											Gra <=0; Grb <=0; Grc <=0; BAout <=0;
+											Gra <=0; Grb <=0; Grc <=0; BAout <=0; conOut <=0;
 											MDatain<=32'h00000000;
 			end
+			
 			
 			//ld	 R1, $85				:	8388693
 			//ld	 R0, $35(R1)		:	524323
@@ -75,7 +76,12 @@ always @(Present_state)
 			//brnz R2, 35				:	2433220643
 			//brpl R2, 35				:	2433744931
 			//brmi R2, 35				:	2434269219
-			
+			//jr	 R1					:	2558525440
+			//jal	 R1					:	2692743168
+			//mfhi R2					:	3103784960
+			//mflo R2					:	3238002688
+			//out	 R1					:	2961178624
+			//in	 R1					:	2826960896
 			
 			
 			
@@ -143,20 +149,45 @@ always @(Present_state)
 //						 #30 ZLowout <= 0; Gra <= 0; Rin <= 0; end
 
 //brzr, brnz, brpl, brmi
-			T3: begin #5 Gra <= 1; Rout <= 1; CONIn <= 1;
-						 #30 Gra <= 0; Rout <= 0; CONIn <= 0; end
-			
-			T4: begin #5 PCout <= 1; Yin <= 1;
-						 #30 PCout <= 0; Yin <= 0; end
-			
-			T5: begin #5 Cout <= 1; ALUselect <= 4'b0001; Zin <= 1;
-						 #30 Cout <= 0; ALUselect <= 4'b0000; Zin <= 0; end
-			
-			T6: begin #5 ZLowout <= 1; PCin <= 1;
-						 #30 ZLowout <= 0; PCin <= 0; end
+//			T3: begin #5 Gra <= 1; Rout <= 1; conIn <= 1;
+//						 #30 Gra <= 0; Rout <= 0; conIn <= 0; end
+//			
+//			T4: begin #5 PCout <= 1; Yin <= 1;
+//						 #30 PCout <= 0; Yin <= 0; end
+//			
+//			T5: begin #5 Cout <= 1; ALUselect <= 4'b0001; Zin <= 1;
+//						 #30 Cout <= 0; ALUselect <= 4'b0000; Zin <= 0; end
+//			
+//			T6: begin #5 ZLowout <= 1; conOut <= 1;
+//						 #30 ZLowout <= 0; conOut <= 0; end
 
+//jr
+//			T3: begin #5 Gra <= 1; Rout <= 1; PCin <= 1;
+//						 #30 Gra <= 0; Rout <= 0; PCin <= 0; end
+						 
+//jal
+//			T3: begin #5 R15ctrl <= 1; PCout <= 1;
+//						 #30 R15ctrl <= 0; PCout <= 0; end
+//			
+//			T4: begin #5 Gra <= 1; Rout <= 1; PCin <= 1;
+//						 #30 Gra <= 0; Rout <= 0; PCin <= 0; end
 
-			
+//mfhi
+//			T3: begin #5 ZHighout <= 1; Gra <= 1; Rin <= 1;
+//						 #30 ZHighout <= 0; Gra <= 0; Rin <= 0; end
+
+//mflo
+			T3: begin #5 ZLowout <= 1; Gra <= 1; Rin <= 1;
+						 #30 ZLowout <= 0; Gra <= 0; Rin <= 0; end
+
+//out
+//			T3: begin #5 Gra <= 1; Rout <= 1; outPortin <= 1;
+//						 #30 Gra <= 0; Rout <= 0; outPortin <= 0; end
+
+//in
+//			T3: begin #5 Gra <= 1; Rin <= 1; InPortout <= 1;
+//						 #30 Gra <= 0; Rin <= 0; InPortout <= 0; end
+
 			
        endcase 
     end 

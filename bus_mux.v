@@ -32,7 +32,7 @@ module bus_mux(
 		2	:	bus<=busInMDR;
 		1	:	bus<=busInInPort;
 		0	:	bus<=busInC;
-		default	:	bus<=32'bx;
+		default	:	bus<=32'b0;
 		endcase
 
 endmodule
