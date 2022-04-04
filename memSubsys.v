@@ -8,6 +8,6 @@ module memSubsys(input MARin, output reg[31:0] busInMDR, input[31:0] MDatain, in
 	always @ (posedge clk)
 		begin
 			if(read) busInMDR=qMDR;
-			else busInMDR=memOut;
+			else if(write) busInMDR=memOut;
 		end
 endmodule

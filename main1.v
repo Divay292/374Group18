@@ -4,11 +4,12 @@ module main1(
 		input	HIin, LOin, PCin, IRin, Yin, InPortout, Zin, conIn, outPortin, R15ctrl,
 		input HIout, LOout, PCout, MDRout, MDRin, MARin, MDRread, memWrite, Cout, clk, IncPC, ZLowout, ZHighout, conOut, BAout, Gra, Grb, Grc,
 		input [3:0] ALUselect,
-		input [31:0] MDatain
+		input [31:0] MDatain,
+		output [31:0] IRdata
 		);
 		
 		wire[63:0] ZReg;
-		wire[31:0] bus, IRdata, PCtemp;
+		wire[31:0] bus, PCtemp;
 		wire clr;
 		wire IROut, R15in;
 		wire [31:0] YData, XData;
@@ -17,6 +18,12 @@ module main1(
 		wire [31:0]	R0temp, busInR0, busInR1, busInR2, busInR3, busInR4, busInR5, busInR6, busInR7, busInR8, busInR9, busInR10, busInR11, busInR12, busInR13, busInR14, busInR15, busInPC, busInMAR, busInMDR, busInHI, busInLO, busInZ, busInInPort, busInC;
 		
 		wire [15:0] genRegIn, genRegOut;
+		
+		ctrl_unit ctrl(Gra1, Grb1, Grc1, Rin1, Rout1, MDRin1, MDRout1, BAout1, Cout1, ZLowout1, PCin1, IRin1, HIout1, LOout1,
+								InPortout1, outPortin1, LOin1, ZHighout1, HIin1, Yin1, Zin1, PCout1, IncPC1, MARin1, read1, wren1, clr1, conIn1, Run1,
+								ALUselect1, IRdata1, clk1, reset1, stp1, conOut1);
+		
+		
 		
 		gen_reg r0(R0temp, bus, genRegIn[0], clr, clk);
 
