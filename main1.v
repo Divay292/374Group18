@@ -5,7 +5,8 @@ module main1(
 		input HIout, LOout, PCout, MDRout, MDRin, MARin, MDRread, memWrite, Cout, clk, IncPC, ZLowout, ZHighout, conOut, BAout, Gra, Grb, Grc,
 		input [3:0] ALUselect,
 		input [31:0] MDatain,
-		output [31:0] IRdata
+		output [31:0] IRdata,
+		output [7:0] sevSegOut
 		);
 		
 		wire[63:0] ZReg;
@@ -50,7 +51,7 @@ module main1(
 		sel_enc selectEncodeLogic(IRdata, Rin, Rout, BAout, Cout, Gra, Grb, Grc, genRegIn, genRegOut, busInC);
 		
 		con_ff conFF(IRdata, bus, conIn, clk, conFFOut);
-		inoutport inOutPort(outPortin, clr, clk, inPortout, busInInPort, bus);
+		inoutport inOutPort(outPortin, clr, clk, inPortout, busInInPort, bus, sevSegOut);
 		
 		
 		

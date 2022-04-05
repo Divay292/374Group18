@@ -16,7 +16,7 @@ module datapath_tb;
 	wire[3:0] ALUselect;
 	reg[31:0] MDatain;
 	wire Read, Write;
-	
+	wire [7:0] sevSegOut;
 	wire [31:0]IRdata;
 
 	parameter	Default = 4'b0000, Reg_load1a = 4'b0001, Reg_load1b = 4'b0010, Reg_load2a = 4'b0011 ,Reg_load2b = 4'b0100,
@@ -28,7 +28,7 @@ module datapath_tb;
 	main1 DUT (.Rin(Rin), .Rout(Rout), .HIin(HIin), .LOin(LOin), .PCin(PCin), .IRin(IRin), .Yin(Yin), .InPortout(InPortout),
 				  .Zin(Zin), .conIn(conIn), .outPortin(outPortin), .R15ctrl(R15ctrl), .HIout(HIout), .LOout(LOout), .PCout(PCout), .MDRout(MDRout), .MDRin(MDRin),
 				  .MARin(MARin), .MDRread(Read), .memWrite(Write), .Cout(Cout), .clk(clk), .IncPC(IncPC), .ZLowout(ZLowout), .ZHighout(ZHighout),
-				  .conOut(conOut), .BAout(BAout), .Gra(Gra), .Grb(Grb), .Grc(Grc), .ALUselect(ALUselect), .MDatain(MDatain), .IRdata(IRdata));
+				  .conOut(conOut), .BAout(BAout), .Gra(Gra), .Grb(Grb), .Grc(Grc), .ALUselect(ALUselect), .MDatain(MDatain), .IRdata(IRdata), .sevSegOut(sevSegOut));
 	
 	
 	
